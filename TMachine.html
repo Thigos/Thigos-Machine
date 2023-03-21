@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap');
+        body{
+            width: 100vw;
+            height: 100vh;
+            margin: 0px;
+            display: flex;
+            align-items: center;
+            background-image: url('back.jpg');
+            background-position: 50% center;
+            background-size: 200%;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            overflow-x: hidden;
+        }
+        p, h1, label{
+            font-family: 'Ubuntu', sans-serif;
+        }
+
+        h1 {
+            line-break: anywhere;
+        }
+
+        .show-container{
+            display: flex;
+            width: 400px;
+            max-width: 400px;
+            height: 80%;
+            background-color: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(2px);
+            border-radius: 0px 33px 33px 0px;
+            border-right: solid 5px white;
+            border-top: solid 5px white;
+            border-bottom: solid 5px white;
+            overflow-x: hidden;
+        }
+
+        .menu {
+            width: 100%;
+            position: fixed;
+            background-color: white;
+            height: 40px;
+            border-radius: 0px 0px 33px 0px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .menu p{
+            font-size: medium;
+            cursor: pointer;
+            margin-right: 20px;
+        }
+        
+        .container{
+            width: 100%;
+            height: 100%;
+            margin-right: 50px;
+            position: absolute;
+            left: 0px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            transition: 1s;
+            z-index: -1;
+        }
+
+        input{
+            margin-top: 20px;
+            border-radius: 33px;
+            border: none;
+            padding: 5px;
+        }
+
+        .right {
+            position: absolute;
+            right: 0px;
+            border-radius: 33px 0px 0px 33px;
+            border-right: none;
+            border-left: solid 5px white;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+        }
+
+        @media (max-width: 900px) {
+            body{
+                flex-direction: column;
+                align-items: unset;
+            }
+
+            .right{
+                margin-top: 100%;
+            }
+        }
+    </style>
+        
+</head>
+<body onmousemove="mouseTrack(event)">
+    <div class="show-container">
+        <div class="menu">
+            <p onclick="selectBin()">Binário</p>
+            <p onclick="selectOctal()">Octal</p>
+            <p onclick="selectHexa()">Hexadecimal</p>
+        </div>
+        <div class="container" id="container_bin">
+            <label>Valor à ser Convertido em Binário</label>
+            <input placeholder="xx" onkeyup="definirVal(this.value, 2)">
+
+        </div>
+
+        <div class="container" style="left: 400px;" id="container_octal">
+            <label>Valor à ser Convertido em Octal</label>
+            <input placeholder="xx" id="inp_octal" onkeyup="definirVal(this.value, 8)">
+
+        </div>
+
+        <div class="container" style="left: 800px;" id="container_hexa">
+            <label>Valor à ser Convertido em Hexadecimal</label>
+            <input placeholder="xx" id="inp_hexa" onkeyup="definirVal(this.value, 16)">
+
+        </div>
+    </div>
+
+    <div class="show-container right">
+        <h1 id="sw_msg"></h1>
+    </div>
+</body>
+</html>
+<script>
+    // BACKGROUND ANIM
+    var body = document['body'];
+    var centerX = -window.innerWidth/2;
+    var centerY = -window.innerHeight/2;
+
+    function mouseTrack(event){
+        let mouseX = event.clientX;
+        let mouseY = event.clientY;
+
+        setTimeout(()=>{
+            body.style.backgroundPositionX = centerX + (mouseX/10) + 'px';
+            body.style.backgroundPositionY = centerY + (mouseY/10) + 'px';
+
+        },150)
+    }
+
+    // CAROUSEL ANIM
+    function selectBin(){
+        container_bin.style.left = "0px";
+        container_octal.style.left = "400px";
+        container_hexa.style.left = "800px";
+    }
+    function selectOctal(){
+        container_octal.style.left = "0px";
+        container_bin.style.left = "-400px";
+        container_hexa.style.left = "800px";
+    }
+    function selectHexa(){
+        container_hexa.style.left = "0px";
+        container_bin.style.left = "-800px";
+        container_octal.style.left = "-400px";
+    }
+
+    // CALCULOS
+    function definirVal(value, base){
+        value = Number(value);
+        var convertido = value.toString(base);
+        console.log(convertido, base)
+        convertido = convertido.toUpperCase()
+        
+        sw_msg.innerHTML = convertido;
+        
+    }
+
+</script>
